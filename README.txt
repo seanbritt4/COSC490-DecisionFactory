@@ -18,7 +18,9 @@ WFFFW
 WWWWW
 
 NOTE:
-changed the following (I know there is a bit of lost of meaning with these variable names but it is the most efficient method that I could come up with):
+Tried to implement with changing as little code in framework.py as possible though i did change the following 
+(I know there is a bit of lost of meaning with these variable names but it is the most efficient method that I could come up 
+with(later edit: might be uneccessary and can change back if needed):
 GRND 	->	F	#floor
 WALL 	->	W 	#wall
 PLAYER	->	P 	#player
