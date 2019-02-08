@@ -17,16 +17,7 @@ KNOWN ISSUES:
 CHANGE LOG:
     Fri.  Feb 8:
       -work on map input. work is too busy to do anything too serious...
-        see README for formatting
-        NOTE:
-    I changed the following (I know there is a bit of lost of meaning
-    with these variable names but it is the most efficient method
-    that I could come up with):
-  GRND 	->	F	#floor
-  WALL 	->	W 	#wall
-  PLAYER	->	P 	#player
-  PORTAL	->	G 	#goal
-  NONE 	-> 	N 	#none
+        see lower for formatting and other related change
 
     Thurs Feb 7:
         -formatting
