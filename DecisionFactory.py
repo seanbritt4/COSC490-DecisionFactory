@@ -28,7 +28,6 @@ class DecisionFactory:
 		#random.randint(0,4) #Includes wait state
 		r = random.randint(1,4) #Does NOT include wait state
 
-		self.last_direction = self.directions[r]
 		return self.directions[r]
 
 	def put_result(self, result):
