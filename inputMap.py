@@ -12,33 +12,34 @@ def readMap(file):
 	tilemap = []
 	
 
-	# try:
-	for lines in range(2):
-		line = src.readline()
-		dimensions[lines] = int(line[0])
-	
-	while True:
-		row = []
-		line = src.readline()
-	
-		if not line:							#if no line is read
-			break
+	try:
+		for lines in range(2):
+			line = src.readline()
+			print line
+			dimensions[lines] = int(line)
+		
+		while True:
+			row = []
+			line = src.readline()
+		
+			if not line:							#if no line is read
+				break
 
-		for i in range(dimensions[0]):			#reads through lines of file
-			if i != '\n':						#ignore newlines
-				# print line[i].upper(),		#DEBUGGING
-				if line[i].upper() == 'F':
-					row.append(0)
-				elif line[i].upper() == "W":
-					row.append(1)
-				else:
-					row.append('x')
+			for i in range(dimensions[0]):			#reads through lines of file
+				if i != '\n':						#ignore newlines
+					# print line[i].upper(),		#DEBUGGING
+					if line[i].upper() == 'F':
+						row.append(0)
+					elif line[i].upper() == "W":
+						row.append(1)
+					else:
+						row.append('x')
 
-		tilemap.append(row)
+			tilemap.append(row)
 
-	# except:
-	# 	print "Format Error: File does not match expected input. See README for formatting tips."
-	# 	sys.exit(2)
+	except:
+		print "Format Error: File does not match expected input. See README for formatting tips."
+		sys.exit(2)
 
 	# print "dimensions:", dimensions			#DEBUGGING
 
