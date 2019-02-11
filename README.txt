@@ -1,4 +1,4 @@
-TODO: Find some shit bois
+TODO: Make -noGraphics work without a mapXX.txt input
 
 CHANGES: 2/10/19 Matt
                  -- added a fixMatrix() function, maps of all shapes and sizes now work
@@ -9,6 +9,7 @@ CHANGES: 2/10/19 Matt
         2/11/19 Matt
                  --added functionality to manually (and optionally) place player or portal in the map where we wish
                  --added -initOverride command line parameter that overrides previous change and initializes player/portal anyway
+                 --added -noGraphics command line parameter that turns off the graphics for the AI/Map
 
 OVERRIDE INITIALIZATION/NO GRAPHICS HOWTO:
 By using a map with a 'p' and/or 'g' tile in them, we can override their positions and randomly place them by using the command:
