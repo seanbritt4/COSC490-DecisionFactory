@@ -3,14 +3,16 @@ initPortalAndPlayer() function, and maybe also an 'override' command line parame
 for added flexability 
       -make printing the graphical map to the screen optional, perhaps through a command line parameter
 
-CHANGES: 2/10/19 Matt
-                 -- added a fixMatrix() function, maps of all shapes and sizes now work
-                 -- changed the printing a little bit, made steps count when we walk into a wall (this can be changed when we 
-                 make the AI 'smarter', when they know not to walk into a wall). Also changed the printMap function so it is 
-                 called on every iteration, personally I like it more that way for the same reason as the step counter, but we 
-                 can change that if you guys object, "Democracy is King" is my favorite saying after all. 
-
-
+CHANGES: 
+      2/11/19 Sean
+      -Matt, I undid almost everything you added... Not on purpose,my bad. I just didnt read the README before startng.
+              lesson learned, I will read it first next time. I messed with the steps and print out but Ill change it back. 
+              Not trying to be stubborn about it, just an idiot that didn't read.
+      -However, I did more than just undo Matss, code. Made a first attempt at "better than random". Suffering when goal is 
+            not on a wall, but consistently finding it when it is. Essientially the player runs around the wall... There is 
+            a lot of room for improvement but not enough time this morning.
+            
+            
 READING MAPS BY INPUT
 HOW TO DO:
 python framework.py <map_file_name>
