@@ -1,7 +1,4 @@
-TODO: -implement a way to add portal and player location on the textfile without having them affected by the 
-initPortalAndPlayer() function, and maybe also an 'override' command line parameter that uses initPortalAndPlayer() anyway, just 
-for added flexability 
-      -make printing the graphical map to the screen optional, perhaps through a command line parameter
+TODO: Find some shit bois
 
 CHANGES: 2/10/19 Matt
                  -- added a fixMatrix() function, maps of all shapes and sizes now work
