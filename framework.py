@@ -52,10 +52,6 @@ MAPHEIGHT = 10		#default- used if no map file is passed at execution
 #define position globally
 position = (0, 0)
 
-#pygame set-up
-pygame.init()
-pygame.display.set_caption("Walter Wanderley")  #names window
-DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 
 '''
@@ -65,8 +61,9 @@ def initPlayerAndPortal():
 	#check for initOverride
 	initOverride = False
 	if len(sys.argv) >= 3:
-		if sys.argv[2] == "-initOverride":
-			initOverride = True
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-initOverride":
+				initOverride = True
 
 	#check if player or portal exists in textmap
 	playerExists = False
@@ -202,8 +199,18 @@ def main():
         
         #swap tiles to match the input map
         fixMatrix(tilemap)
-        #re-initialize the display to match map size
-        DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
+
+	#turn off map printing w/ -noGraphics
+	noGraphics = False
+	if len(sys.argv) >= 2:
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-noGraphics":
+				noGraphics = True
+	if noGraphics == False:
+		#initialize the display
+		pygame.init()
+		pygame.display.set_caption("Walter Wanderley")
+       		DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 	initPlayerAndPortal()
 	steps = 0               #steps to find goal
@@ -211,11 +218,12 @@ def main():
 
 	printTilemap()
 	while True:
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				pygame.quit()
-				sys.exit()
-					
+		if noGraphics == False:
+			for event in pygame.event.get():
+				if event.type == QUIT:
+					pygame.quit()
+					sys.exit()
+						
 		time.sleep(0.08)
 		print
 
@@ -238,13 +246,14 @@ def main():
 			movePlayer(position, decision)
 
 	    	printTilemap()
-
-                #draw map to screen	
-		for column in range(MAPWIDTH):
-			for row in range(MAPHEIGHT):
-				pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 		
-		pygame.display.update()
+		if noGraphics == False:
+			#draw map to screen	
+			for column in range(MAPWIDTH):
+				for row in range(MAPHEIGHT):
+					pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
+			
+			pygame.display.update()
 
 
 '''
