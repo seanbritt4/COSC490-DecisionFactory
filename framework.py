@@ -62,26 +62,51 @@ DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 '''
 def initPlayerAndPortal():
-	#initPlayer
-	success = False
+	#check for initOverride
+	initOverride = False
+	if len(sys.argv) >= 3:
+		if sys.argv[2] == "-initOverride":
+			initOverride = True
+
+	#check if player or portal exists in textmap
+	playerExists = False
+	portalExists = False
 	global position
-	while success == False:
-		rx = random.randint(0, MAPWIDTH - 1)
-		ry = random.randint(0, MAPHEIGHT - 1)
+	for y in range(0, MAPHEIGHT):
+		for x in range(0, MAPWIDTH):
+			if tilemap[x][y] == 3:
+				if initOverride == False:
+					playerExists = True
+					position = [x, y]
+				else:
+					tilemap[x][y] = 0
+			if tilemap[x][y] == 2:
+				if initOverride == False:
+					portalExists = True
+				else:
+					tilemap[x][y] = 0	
 
-		if tilemap[rx][ry] != W and tilemap[rx][ry] != N:
-			tilemap[rx][ry] = P
-			position = [rx, ry]
-			success = True
+	if playerExists == False:
+		#initPlayer
+		success = False
+		while success == False:
+			rx = random.randint(0, MAPWIDTH - 1)
+			ry = random.randint(0, MAPHEIGHT - 1)
 
-	#init portal
-	success = False
-	while success == False:
-		rx = random.randint(1, MAPWIDTH - 2)
-		ry = random.randint(1, MAPHEIGHT - 2)
-		if tilemap[rx][ry] != W and tilemap[rx][ry] != P and tilemap[rx][ry] != N:
-			tilemap[rx][ry] = G
-			success = True
+			if tilemap[rx][ry] != W and tilemap[rx][ry] != N:
+				tilemap[rx][ry] = P
+				position = [rx, ry]
+				success = True
+
+	if portalExists == False:
+		#init portal
+		success = False
+		while success == False:
+			rx = random.randint(1, MAPWIDTH - 2)
+			ry = random.randint(1, MAPHEIGHT - 2)
+			if tilemap[rx][ry] != W and tilemap[rx][ry] != P and tilemap[rx][ry] != N:
+				tilemap[rx][ry] = G
+				success = True
 
 '''
 	print map to std. out
@@ -191,7 +216,7 @@ def main():
 				pygame.quit()
 				sys.exit()
 					
-		time.sleep(0.8)
+		time.sleep(0.08)
 		print
 
 		decision = df.get_decision()
