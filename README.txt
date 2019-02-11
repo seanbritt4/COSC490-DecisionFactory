@@ -1,3 +1,11 @@
+TODO: -implement a way to add portal and player location on the textfile without having them affected by the initPortalAndPlayer() function, and maybe also an 'override' command line parameter that uses initPortalAndPlayer() anyway, just for added flexability 
+      -make printing the graphical map to the screen optional, perhaps through a command line parameter
+
+CHANGES: 2/10/19 Matt
+                 -- added a fixMatrix() function, maps of all shapes and sizes now work
+                 -- changed the printing a little bit, made steps count when we walk into a wall (this can be changed when we make the AI 'smarter', when they know not to walk into a wall). Also changed the printMap function so it is called on every iteration, personally I like it more that way for the same reason as the step counter, but we can change that if you guys object, "Democracy is King" is my favorite saying after all. 
+
+
 READING MAPS BY INPUT
 HOW TO DO:
 python framework.py <map_file_name>
