@@ -10,10 +10,15 @@ CHANGES: 2/10/19 Matt
                  --added functionality to manually (and optionally) place player or portal in the map where we wish
                  --added -initOverride command line parameter that overrides previous change and initializes player/portal anyway
 
-OVERRIDE INITIALIZATION HOWTO:
+OVERRIDE INITIALIZATION/NO GRAPHICS HOWTO:
 By using a map with a 'p' and/or 'g' tile in them, we can override their positions and randomly place them by using the command:
       `python framework.py mapXX.txt -initOverride`
-      note that the -initOverride command must come after the map.txt
+      
+We can also turn off graphics with the -noGraphics parameter
+      `python framework.py mapXX.txt -noGraphics`
+      
+These commands can come in any order, but we need a mapXX.txt input for both, they also must appear after the mapXX.txt
+I'm going to change the -noGraphics to not require this soon
 
 READING MAPS BY INPUT
 HOW TO DO:
