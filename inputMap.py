@@ -15,7 +15,6 @@ def readMap(file):
 	try:
 		for lines in range(2):
 			line = src.readline()
-			print line
 			dimensions[lines] = int(line)
 		
 		while True:
@@ -27,7 +26,6 @@ def readMap(file):
 
 			for i in range(dimensions[0]):			#reads through lines of file
 				if i != '\n':						#ignore newlines
-					# print line[i].upper(),		#DEBUGGING
 					if line[i].upper() == 'F':
 						row.append(0)
 					elif line[i].upper() == "W":
@@ -40,8 +38,6 @@ def readMap(file):
 	except:
 		print "Format Error: File does not match expected input. See README for formatting tips."
 		sys.exit(2)
-
-	# print "dimensions:", dimensions			#DEBUGGING
 
 	src.close()
 	# return tilemap

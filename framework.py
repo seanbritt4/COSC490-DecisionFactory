@@ -7,14 +7,18 @@
 	SPRING 2019
 	DECISION FACTORY AND FRAMEWORK
 '''
+
 '''
-   moved to README
+TODO: -add a way to initialize the portal/player where we want in the text file, 
+        and not have it affected by the initPlayerAndPortal() function
+
 '''
 
 import pygame, sys, time
 from pygame.locals import *
 from DecisionFactory import *
 from inputMap import readMap
+
 #declare tile colors
 PURPLE = (189, 23, 173) #portal
 BLACK = (0, 0, 0)       #ground/none
@@ -27,7 +31,7 @@ W = 1
 G = 2
 P = 3
 N = 'x' #refers to a spot that cannot be spawned in,
-		   #note that if a player walks over this spot, it will become F
+	#note that if a player walks over this spot, it will become F
 
 #assign colors
 colors = {
@@ -37,21 +41,8 @@ colors = {
 		W : GREY, 
 		N : BLACK
 	}
-
-# hard-coded test map, note the NONE's in the middle and how they appear 
-					# in the real-time array when running
+#map for Walter to wander in
 tilemap = []
-#             [W, W, W, W, W, W, W, W, W, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, F, F, F, F, F, F, W, W, W],
-#             [W, F, F, F, N, N, F, F, F, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, F, F, F, F, F, F, F, F, W],
-#             [W, W, W, W, W, W, W, W, W, W],
-#           ]
 
 #dimensions
 TILESIZE = 40
@@ -60,9 +51,10 @@ MAPHEIGHT = 10		#default- used if no map file is passed at execution
 
 #define position globally
 position = (0, 0)
+
 #pygame set-up
 pygame.init()
-pygame.display.set_caption("Decision Factory")  #names window
+pygame.display.set_caption("Walter Wanderley")  #names window
 DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 
@@ -79,8 +71,6 @@ def initPlayerAndPortal():
 
 		if tilemap[rx][ry] != W and tilemap[rx][ry] != N:
 			tilemap[rx][ry] = P
-			print "player rx:", rx
-			print 'player ry:', ry
 			position = [rx, ry]
 			success = True
 
@@ -106,7 +96,7 @@ def printTilemap():
 
 '''
 def determineResult(decision):
-	d_ver = 0 #d_ver? I hardly know her! LOL my bad i meant to change it back, x/y were confusing me atm
+	d_ver = 0 #d_ver? I hardly know her! LOL my bad i meant to change it back, x/y were confusing me atm. - In a world where x=y, who can blame thee?
 	d_hor = 0 
 	if decision == 'up':
 		d_ver = -1
@@ -158,6 +148,18 @@ def movePlayer(position, decision):
 		tilemap[position[0] + 1][position[1]] = P
 		position[0] = position[0]+1
 
+'''
+Fixes Matrix so that y!=x. Ask no questions, just take it for granted,
+I don't even understand.
+'''
+def fixMatrix(matrix):
+    newMatrix = [[0 for y in range(MAPHEIGHT)] for x in range(MAPWIDTH)]
+    for y in range(MAPHEIGHT):
+        for x in range(MAPWIDTH):
+            newMatrix[x][y] = matrix[y][x]
+    global tilemap
+    tilemap = newMatrix
+
 def main():
 	if len(sys.argv) >= 2: #reads file name, ignores all other arguments passed
 		map_file = sys.argv[1]
@@ -169,19 +171,18 @@ def main():
 	global tilemap
 
 	map_info = readMap(map_file)
-	MAPHEIGHT = map_info[0][0]
-	MAPWIDTH = map_info[0][1]
+	MAPHEIGHT = map_info[0][1]
+	MAPWIDTH = map_info[0][0]
 	tilemap = map_info[1]
-
-	print "map_info:\n", map_info
-	print "MAPHEIGHT:\n", MAPHEIGHT
-	print "MAPWIDTH:\n", MAPWIDTH
-	print "tilemap:\n", tilemap
+        
+        #swap tiles to match the input map
+        fixMatrix(tilemap)
+        #re-initialize the display to match map size
+        DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 	initPlayerAndPortal()
 	steps = 0               #steps to find goal
 	df = DecisionFactory()  #initialize DecisionFactory
-	# position = (0, 0)       #set player position
 
 	printTilemap()
 	while True:
@@ -192,7 +193,6 @@ def main():
 					
 		time.sleep(0.8)
 		print
-		# printTilemap()
 
 		decision = df.get_decision()
 		print "Decision: ", decision
@@ -207,23 +207,19 @@ def main():
 			sys.exit()
 		else:
 			df.put_result(result)
-		# print "Decision:", decision
-		
+		steps += 1
+                print "Steps: ", steps
 		if result == 'success':
-			steps += 1
-			print "Steps: ", steps
-			
 			movePlayer(position, decision)
-			printTilemap()
 
-	
-		for row in range(MAPWIDTH):
-			for column in range(MAPHEIGHT):
+	    	printTilemap()
+
+                #draw map to screen	
+		for column in range(MAPWIDTH):
+			for row in range(MAPHEIGHT):
 				pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 		
-		# steps += 1
 		pygame.display.update()
-		# print "Steps: ", steps
 
 
 '''

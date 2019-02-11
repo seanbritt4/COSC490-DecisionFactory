@@ -11,7 +11,7 @@ Thurs, Feb 7 2019: ~8:15 pm
 '''
 
 class DecisionFactory:
-	def __init__(self, name='Davros'):
+	def __init__(self, name='Walter Wanderley'):
 		self.name = name
 		self.directions = ['wait', 'up', 'down', 'right', 'left']
 		self.last_result = 'success'
