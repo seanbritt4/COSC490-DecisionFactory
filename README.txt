@@ -11,15 +11,18 @@ CHANGES: 2/10/19 Matt
                  --added -initOverride command line parameter that overrides previous change and initializes player/portal anyway
                  --added -noGraphics command line parameter that turns off the graphics for the AI/Map
 
-OVERRIDE INITIALIZATION/NO GRAPHICS HOWTO:
+OVERRIDE INITIALIZATION/NO GRAPHICS/NO SLEEP HOWTO:
 By using a map with a 'p' and/or 'g' tile in them, we can override their positions and randomly place them by using the command:
-      `python framework.py mapXX.txt -initOverride`
+      `python framework.py mapXX.txt -initOverride` or `-r`
       
 We can also turn off graphics with the -noGraphics parameter
-      `python framework.py mapXX.txt -noGraphics`
+      `python framework.py mapXX.txt -noGraphics` or `-ng`
       
-These commands can come in any order, but we need a mapXX.txt input for both, they also must appear after the mapXX.txt
-I'm going to change the -noGraphics to not require this soon
+Lastly, we can make the program not sleep inbetween steps by the command
+      `python framework.py mapXX.txt -fast` or `-f`
+      
+NOTE: The mapXX.txt is optional in all of these. The command line parameters can also appear in any order, so long 
+      as the mapXX.txt comes first
 
 READING MAPS BY INPUT
 HOW TO DO:
