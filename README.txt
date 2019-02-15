@@ -1,4 +1,4 @@
-TODO: Make -noGraphics work without a mapXX.txt input
+TODO: Find some shit!
 
 CHANGES: 2/10/19 Matt
                  -- added a fixMatrix() function, maps of all shapes and sizes now work
