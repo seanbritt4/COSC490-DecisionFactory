@@ -9,9 +9,7 @@
 '''
 
 '''
-TODO: -add a way to initialize the portal/player where we want in the text file, 
-        and not have it affected by the initPlayerAndPortal() function
-
+	TODO: none!
 '''
 
 import pygame, sys, time
@@ -62,10 +60,10 @@ def initPlayerAndPortal():
 	initOverride = False
 	if len(sys.argv) >= 3:
 		for i in range(len(sys.argv)):
-			if sys.argv[i] == "-initOverride":
+			if sys.argv[i] == "-initOverride" or sys.argv[i] == "-r":
 				initOverride = True
 
-	#check if player or portal exists in textmap
+#check if player or portal already exists in textmap
 	playerExists = False
 	portalExists = False
 	global position
@@ -184,7 +182,14 @@ def fixMatrix(matrix):
 
 def main():
 	if len(sys.argv) >= 2: #reads file name, ignores all other arguments passed
-		map_file = sys.argv[1]
+		if sys.argv[1] == "-noGraphics" or sys.argv[1] == "-ng":
+			map_file = "map00.txt"
+		elif sys.argv[1] == "-initOverride" or sys.argv[1] == "-r":
+			map_file = "map00.txt"	
+		elif sys.argv[1] == "-fast" or sys.argv[1] == "-f":
+			map_file = "map00.txt"
+		else:
+			map_file = sys.argv[1]
 	else:
 		map_file = "map00.txt"
 
@@ -204,7 +209,7 @@ def main():
 	noGraphics = False
 	if len(sys.argv) >= 2:
 		for i in range(len(sys.argv)):
-			if sys.argv[i] == "-noGraphics":
+			if sys.argv[i] == "-noGraphics" or sys.argv[i] == "-ng":
 				noGraphics = True
 	if noGraphics == False:
 		#initialize the display
@@ -215,7 +220,12 @@ def main():
 	initPlayerAndPortal()
 	steps = 0               #steps to find goal
 	df = DecisionFactory()  #initialize DecisionFactory
-
+	
+	fast = False
+	if len(sys.argv) >= 2:
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-fast" or sys.argv[i] == "-f":
+				fast = True
 	printTilemap()
 	while True:
 		if noGraphics == False:
@@ -223,8 +233,9 @@ def main():
 				if event.type == QUIT:
 					pygame.quit()
 					sys.exit()
-						
-		time.sleep(0.08)
+		
+		if fast == False:		
+			time.sleep(0.08)
 		print
 
 		decision = df.get_decision()
