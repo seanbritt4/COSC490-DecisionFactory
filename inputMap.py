@@ -30,8 +30,14 @@ def readMap(file):
 						row.append(0)
 					elif line[i].upper() == "W":
 						row.append(1)
-					else:
+					elif line[i].upper() == "G":
+						row.append(2)
+					elif line[i].upper() == 'P':
+						row.append(3)
+					elif line[i].uupper() == 'X':
 						row.append('x')
+					else:
+						row.append('E') #for error
 
 			tilemap.append(row)
 

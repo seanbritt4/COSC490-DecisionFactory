@@ -9,9 +9,7 @@
 '''
 
 '''
-TODO: -add a way to initialize the portal/player where we want in the text file, 
-        and not have it affected by the initPlayerAndPortal() function
-
+	TODO: none!
 '''
 
 import pygame, sys, time
@@ -52,36 +50,58 @@ MAPHEIGHT = 10		#default- used if no map file is passed at execution
 #define position globally
 position = (0, 0)
 
-#pygame set-up
-pygame.init()
-pygame.display.set_caption("Walter Wanderley")  #names window
-DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 
 '''
 
 '''
 def initPlayerAndPortal():
-	#initPlayer
-	success = False
+	#check for initOverride
+	initOverride = False
+	if len(sys.argv) >= 3:
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-initOverride" or sys.argv[i] == "-r":
+				initOverride = True
+
+#check if player or portal already exists in textmap
+	playerExists = False
+	portalExists = False
 	global position
-	while success == False:
-		rx = random.randint(0, MAPWIDTH - 1)
-		ry = random.randint(0, MAPHEIGHT - 1)
+	for y in range(0, MAPHEIGHT):
+		for x in range(0, MAPWIDTH):
+			if tilemap[x][y] == 3:
+				if initOverride == False:
+					playerExists = True
+					position = [x, y]
+				else:
+					tilemap[x][y] = 0
+			if tilemap[x][y] == 2:
+				if initOverride == False:
+					portalExists = True
+				else:
+					tilemap[x][y] = 0	
 
-		if tilemap[rx][ry] != W and tilemap[rx][ry] != N:
-			tilemap[rx][ry] = P
-			position = [rx, ry]
-			success = True
+	if playerExists == False:
+		#initPlayer
+		success = False
+		while success == False:
+			rx = random.randint(0, MAPWIDTH - 1)
+			ry = random.randint(0, MAPHEIGHT - 1)
 
-	#init portal
-	success = False
-	while success == False:
-		rx = random.randint(1, MAPWIDTH - 2)
-		ry = random.randint(1, MAPHEIGHT - 2)
-		if tilemap[rx][ry] != W and tilemap[rx][ry] != P and tilemap[rx][ry] != N:
-			tilemap[rx][ry] = G
-			success = True
+			if tilemap[rx][ry] != W and tilemap[rx][ry] != N:
+				tilemap[rx][ry] = P
+				position = [rx, ry]
+				success = True
+
+	if portalExists == False:
+		#init portal
+		success = False
+		while success == False:
+			rx = random.randint(1, MAPWIDTH - 2)
+			ry = random.randint(1, MAPHEIGHT - 2)
+			if tilemap[rx][ry] != W and tilemap[rx][ry] != P and tilemap[rx][ry] != N:
+				tilemap[rx][ry] = G
+				success = True
 
 '''
 	print map to std. out
@@ -162,7 +182,14 @@ def fixMatrix(matrix):
 
 def main():
 	if len(sys.argv) >= 2: #reads file name, ignores all other arguments passed
-		map_file = sys.argv[1]
+		if sys.argv[1] == "-noGraphics" or sys.argv[1] == "-ng":
+			map_file = "map00.txt"
+		elif sys.argv[1] == "-initOverride" or sys.argv[1] == "-r":
+			map_file = "map00.txt"	
+		elif sys.argv[1] == "-fast" or sys.argv[1] == "-f":
+			map_file = "map00.txt"
+		else:
+			map_file = sys.argv[1]
 	else:
 		map_file = "map00.txt"
 
@@ -177,21 +204,38 @@ def main():
         
         #swap tiles to match the input map
         fixMatrix(tilemap)
-        #re-initialize the display to match map size
-        DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
+
+	#turn off map printing w/ -noGraphics
+	noGraphics = False
+	if len(sys.argv) >= 2:
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-noGraphics" or sys.argv[i] == "-ng":
+				noGraphics = True
+	if noGraphics == False:
+		#initialize the display
+		pygame.init()
+		pygame.display.set_caption("Walter Wanderley")
+       		DISPLAYSURF = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
 
 	initPlayerAndPortal()
 	steps = 0               #steps to find goal
 	df = DecisionFactory()  #initialize DecisionFactory
-
+	
+	fast = False
+	if len(sys.argv) >= 2:
+		for i in range(len(sys.argv)):
+			if sys.argv[i] == "-fast" or sys.argv[i] == "-f":
+				fast = True
 	printTilemap()
 	while True:
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				pygame.quit()
-				sys.exit()
-					
-		time.sleep(0.8)
+		if noGraphics == False:
+			for event in pygame.event.get():
+				if event.type == QUIT:
+					pygame.quit()
+					sys.exit()
+		
+		if fast == False:		
+			time.sleep(0.08)
 		print
 
 		decision = df.get_decision()
@@ -213,13 +257,14 @@ def main():
 			movePlayer(position, decision)
 
 	    	printTilemap()
-
-                #draw map to screen	
-		for column in range(MAPWIDTH):
-			for row in range(MAPHEIGHT):
-				pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 		
-		pygame.display.update()
+		if noGraphics == False:
+			#draw map to screen	
+			for column in range(MAPWIDTH):
+				for row in range(MAPHEIGHT):
+					pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
+			
+			pygame.display.update()
 
 
 '''
