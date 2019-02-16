@@ -5,7 +5,7 @@ def readMap(file):
 		src = open(file)	#opens file as read-only
 	except:
 		print "Input File Error:", file, "could not be found."
-		#could use this to gen random map if prompted by user?
+		#could use th s to gen random map if prompted by user?
 		sys.exit(1)
 
 	dimensions = [0,0] #0: height/rows, 1: width/cols
@@ -13,31 +13,27 @@ def readMap(file):
 	
 
 	try:
-		for lines in range(2):
-			line = src.readline()
-			dimensions[lines] = int(line)
-		
 		while True:
+			i = 0
 			row = []
 			line = src.readline()
-		
-			if not line:							#if no line is read
-				break
+			
+			if not line:			#if no line is read
+					break
+			
+			dimensions[1] += 1
+			while line[i] != '\n':
+				if line[i].upper() == 'F':
+					row.append(0)
+				elif line[i].upper() == "W":
+					row.append(1)
+				else:
+					row.append('x')
 
-			for i in range(dimensions[0]):			#reads through lines of file
-				if i != '\n':						#ignore newlines
-					if line[i].upper() == 'F':
-						row.append(0)
-					elif line[i].upper() == "W":
-						row.append(1)
-					elif line[i].upper() == "G":
-						row.append(2)
-					elif line[i].upper() == 'P':
-						row.append(3)
-					elif line[i].uupper() == 'X':
-						row.append('x')
-					else:
-						row.append('E') #for error
+				i += 1
+
+			if i > dimensions[0]:
+				dimensions[0] = i		
 
 			tilemap.append(row)
 
@@ -46,7 +42,5 @@ def readMap(file):
 		sys.exit(2)
 
 	src.close()
-	# return tilemap
-	#may not be needed but can also use the following if height/width info needed:
 	map_info = [dimensions, tilemap]
 	return map_info
