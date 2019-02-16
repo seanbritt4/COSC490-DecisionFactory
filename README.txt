@@ -1,24 +1,8 @@
 TODO: Find some shit!
 
-CHANGES: 
-      2/11/19 Sean
-      -Matt, I undid almost everything you added... Not on purpose,my bad. I just didnt read the README before startng.
-              lesson learned, I will read it first next time. I messed with the steps and print out but Ill change it back. 
-              Not trying to be stubborn about it, just an idiot that didn't read.
-      -However, I did more than just undo Matss, code. Made a first attempt at "better than random". Suffering when goal is 
-            not on a wall, but consistently finding it when it is. Essientially the player runs around the wall... There is 
-            a lot of room for improvement but not enough time this morning.
+CHNGES:
+      Ready to show off on monday. Up to date minus Alec's work for the week.
       
-      2/10/19 Matt
-                 -- added a fixMatrix() function, maps of all shapes and sizes now work
-                 -- changed the printing a little bit, made steps count when we walk into a wall (this can be changed when we 
-                 make the AI 'smarter', when they know not to walk into a wall). Also changed the printMap function so it is 
-                 called on every iteration, personally I like it more that way for the same reason as the step counter, but we 
-                 can change that if you guys object, "Democracy is King" is my favorite saying after all. 
-        2/11/19 Matt
-                 --added functionality to manually (and optionally) place player or portal in the map where we wish
-                 --added -initOverride command line parameter that overrides previous change and initializes player/portal anyway
-                 --added -noGraphics command line parameter that turns off the graphics for the AI/Map
 
 OVERRIDE INITIALIZATION/NO GRAPHICS/NO SLEEP HOWTO:
 By using a map with a 'p' and/or 'g' tile in them, we can override their positions and randomly place them by using the command:
@@ -35,23 +19,20 @@ NOTE: The mapXX.txt is optional in all of these. The command line parameters can
 
 
 READING MAPS BY INPUT
+      IMPORTANT: map files must have a new line at the end of the matrix
+      
 HOW TO DO:
 python framework.py <map_file_name>
 (test map will be used if no map file is passed)
 
-FORMAT:
-<height>
-<width>
-<matrix (NOT case-sensitive)>
-
 ex:
-5
-5
 WWWWW
 WFFFW
 WFFFW
 WFFFW
 WWWWW
+
+<end-of-file>
 
 NOTE:
 changed the following (I know there is a bit of lost of meaning with these variable names but it is the most efficient method that I could come up with):
