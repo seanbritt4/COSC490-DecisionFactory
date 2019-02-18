@@ -1,4 +1,4 @@
-TODO: Find some shit!
+TODO: Nada
 
 CHNGES:
       Ready to show off on monday. Up to date minus Alec's work for the week.
