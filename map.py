@@ -1,5 +1,5 @@
 import sys
-from random import randint
+import random
 
 def readMap(file):
 	try:
@@ -51,41 +51,39 @@ def readMap(file):
 def newMap():
     f = open("newMap.txt","w+")
 
-    #holds width input
-    r = raw_input("Please enter a new width or random for a random number: ")
-    
-    #determines if a random number or user inputed is put into the file
-    if r == 'random':
-        width = str(random.randint(4,21))
-        wide = int(width)
-        f.write(width + '\n')
+    w = int(raw_input("Please enter the number of columns (width): "))
+    l = int(raw_input("Please enter the number of rows (length): "))
 
-    else:
-        width = r
-        wide = int(width)
-        f.write(width+ '\n')
-        #holds length input 
-    l = raw_input("Please enter a new length or random for a random number: ")
-
-    #if the user asks for random this will make a random length
-    if l == 'random':
-        length = str(random.randint(4,21))
-
-        lent = int(length)
-        f.write(length + '\n')
-
-    else:
-        length = l
-        lent = int(length)
-        f.write(length + '\n')
-
-#creates a map based off inputted length and width
-    for x in range(lent):
-        for i in range(wide):
-            if x == 0 or i == 0 or x == lent - 1 or i == wide - 1:
+	#creates a map based off inputted length and width
+    for x in range(l):
+        for i in range(w):
+            if x == 0 or i == 0 or x == l - 1 or i == w - 1:
                 f.write('w')
             else:
                 f.write('f')
 
         f.write('\n')
+
     f.close()
+    return "newMap.txt"
+
+
+def randMap():
+	f = open("newMap.txt","w+")
+
+	width = random.randint(4,21)
+	length = random.randint(4,21)
+
+	#creates a map based off inputted length and width
+	for x in range(length):
+		for i in range(width):
+			if x == 0 or i == 0 or x == length - 1 or i == width - 1:
+				f.write('w')
+			else:
+				f.write('f')
+
+			f.write('\n')
+        
+	f.close()
+
+	return "newMap.txt"

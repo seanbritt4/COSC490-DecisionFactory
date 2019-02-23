@@ -11,7 +11,7 @@
 '''
 	TODO: none!
 '''
-
+import re
 import pygame, sys, time
 from pygame.locals import *
 from DecisionFactory import *
@@ -50,6 +50,10 @@ MAPHEIGHT = 10		#default- used if no map file is passed at execution
 #define position globally
 position = (0, 0)
 
+INIT_OVER = False
+FAST = False
+RAND_MAP = False
+NO_GRAPHICS = False
 
 
 '''
@@ -57,13 +61,13 @@ position = (0, 0)
 '''
 def initPlayerAndPortal():
 	#check for initOverride
-	initOverride = False
-	if len(sys.argv) >= 3:
-		for i in range(len(sys.argv)):
-			if sys.argv[i] == "-initOverride" or sys.argv[i] == "-r":
-				initOverride = True
+	# initOverride = False
+	# if len(sys.argv) >= 3:
+	# 	for i in range(len(sys.argv)):
+	# 		if sys.argv[i] == "-initOverride" or sys.argv[i] == "-r":
+	# 			initOverride = True
 
-#check if player or portal already exists in textmap
+	#check if player or portal already exists in textmap
 	playerExists = False
 	portalExists = False
 	global position
@@ -181,25 +185,28 @@ def fixMatrix(matrix):
     tilemap = newMatrix	
 
 def main():
-    response = raw_input("Would you like to make your own map? Y/N: ")
-    if response == 'y' or response == "Y":
-        
-        newMap()
-        map_file = "newMap.txt"
+	map_file = "map00.txt"
 
-    else:
-	
 	if len(sys.argv) >= 2: #reads file name, ignores all other arguments passed
-		if sys.argv[1] == "-noGraphics" or sys.argv[1] == "-ng":
-			map_file = "map00.txt"
-		elif sys.argv[1] == "-initOverride" or sys.argv[1] == "-r":
-			map_file = "map00.txt"	
-		elif sys.argv[1] == "-fast" or sys.argv[1] == "-f":
-			map_file = "map00.txt"
-		else:
-			map_file = sys.argv[1]
-	else:
-		map_file = "map00.txt"
+		
+		# coming back to this- add use regex's to search argv for *.py and assign map_file
+		map_file = sys.argv[1]
+
+		for arg in sys.argv:
+			if arg == '-noGraphics' or arg == '-ng':
+				global NO_GRAPHICS
+				NO_GRAPHICS = True
+			elif arg == '-noGraphics' or arg == '-ng':
+				global INIT_OVER
+				INIT_OVER = True
+			elif arg == '-fast' or arg == '-f':
+				global FAST
+				FAST = True
+			elif arg == '-randomMap' or arg == '-rm':
+				map_file = randMap()
+			elif arg == '-newMap' or arg == '-nm':
+				map_file = newMap()
+
 
 	global MAPHEIGHT
 	global MAPWIDTH
@@ -210,8 +217,8 @@ def main():
 	MAPWIDTH = map_info[0][0]
 	tilemap = map_info[1]
         
-        #swap tiles to match the input map
-        fixMatrix(tilemap)
+    #swap tiles to match the input map
+	fixMatrix(tilemap)
 
 	#turn off map printing w/ -noGraphics
 	noGraphics = False
