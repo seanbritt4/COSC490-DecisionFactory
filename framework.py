@@ -15,7 +15,7 @@
 import pygame, sys, time
 from pygame.locals import *
 from DecisionFactory import *
-from inputMap import readMap
+from map import *
 
 #declare tile colors
 PURPLE = (189, 23, 173) #portal
@@ -178,73 +178,10 @@ def fixMatrix(matrix):
         for x in range(MAPWIDTH):
             newMatrix[x][y] = matrix[y][x]
     global tilemap
-    tilemap = newMatrix
-
-	
-	
-#creates a new map either based off the user input or a random number when prompted by the user
-def newMap():
-
-    f = open("newMap.txt","w+")
-
-
-    #holds width input
-    r = raw_input("Please enter a new width or random for a random number: ")
-
-    
-    #determines if a random number or user inputed is put into the file
-    if r == 'random':
-
-        width = str(random.randint(4,21))
-
-        wide = int(width)
-        f.write(width + '\n')
-
-    else:
-        width = r
-        wide = int(width)
-        f.write(width+ '\n')
-        #holds length input 
-    l = raw_input("Please enter a new length or random for a random number: ")
-
-   
-
-    #if the user asks for random this will make a random length
-    if l == 'random':
-
-        length = str(random.randint(4,21))
-
-        lent = int(length)
-        f.write(length + '\n')
-
-    else:
-        length = l
-        lent = int(length)
-        f.write(length + '\n')
-
-
-#creates a map based off inputted length and width
-    for x in range(lent):
-        for i in range(wide):
-
-            if x == 0 or i == 0 or x == lent - 1 or i == wide - 1:
-
-                f.write('w')
-
-            else:
-                f.write('f')
-
-        f.write('\n')
-
-
-    f.close()
-	
+    tilemap = newMatrix	
 
 def main():
-	
-	
     response = raw_input("Would you like to make your own map? Y/N: ")
-
     if response == 'y' or response == "Y":
         
         newMap()
