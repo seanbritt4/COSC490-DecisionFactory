@@ -1,7 +1,17 @@
-TODO: Nada
+TODO:
+      -fix randMap() caused issue (only happens with -r/-randomMap tags)
+      -issue with map file passed as command line arg
+            IF *ANY* TAGS ARE USED MAP FILE MUST BE FIRST UNTIL THIS IS RESOLVED!!!
+            *EVEN IF GENERATING NEW MAP FILES,  MUST PASS A MAPFILE*
+            ex:
+                  python framework.py map01.py -f -rm
+            DO NOT USE:
+                  python framework.py -f
+                  python framework.py -nm
+                  etc.
 
 CHNGES:
-      Ready to show off on monday. Up to date minus Alec's work for the week.
+      some optimization and restructuring, see upload comments for more info
       
 
 OVERRIDE INITIALIZATION/NO GRAPHICS/NO SLEEP HOWTO:
