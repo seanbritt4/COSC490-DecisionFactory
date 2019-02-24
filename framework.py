@@ -55,37 +55,31 @@ FAST = False
 RAND_MAP = False
 NO_GRAPHICS = False
 
-
 '''
 
 '''
 def initPlayerAndPortal():
-	#check for initOverride
-	# initOverride = False
-	# if len(sys.argv) >= 3:
-	# 	for i in range(len(sys.argv)):
-	# 		if sys.argv[i] == "-initOverride" or sys.argv[i] == "-r":
-	# 			initOverride = True
-
 	#check if player or portal already exists in textmap
-	playerExists = False
-	portalExists = False
+	global INIT_OVER
+
+	player_exists = False
+	portal_exists = False
 	global position
 	for y in range(0, MAPHEIGHT):
 		for x in range(0, MAPWIDTH):
 			if tilemap[x][y] == 3:
-				if initOverride == False:
-					playerExists = True
+				if INIT_OVER == False:
+					player_exists = True
 					position = [x, y]
 				else:
 					tilemap[x][y] = 0
 			if tilemap[x][y] == 2:
-				if initOverride == False:
-					portalExists = True
+				if INIT_OVER == False:
+					portal_exists = True
 				else:
 					tilemap[x][y] = 0	
 
-	if playerExists == False:
+	if player_exists == False:
 		#initPlayer
 		success = False
 		while success == False:
@@ -97,7 +91,7 @@ def initPlayerAndPortal():
 				position = [rx, ry]
 				success = True
 
-	if portalExists == False:
+	if portal_exists == False:
 		#init portal
 		success = False
 		while success == False:
@@ -187,8 +181,7 @@ def fixMatrix(matrix):
 def main():
 	map_file = "map00.txt"
 
-	if len(sys.argv) >= 2: #reads file name, ignores all other arguments passed
-		
+	if len(sys.argv) >= 2:
 		# coming back to this- add use regex's to search argv for *.py and assign map_file
 		map_file = sys.argv[1]
 
@@ -196,17 +189,16 @@ def main():
 			if arg == '-noGraphics' or arg == '-ng':
 				global NO_GRAPHICS
 				NO_GRAPHICS = True
-			elif arg == '-noGraphics' or arg == '-ng':
+			elif arg == '-initOverride' or arg == '-r':
 				global INIT_OVER
 				INIT_OVER = True
 			elif arg == '-fast' or arg == '-f':
 				global FAST
 				FAST = True
 			elif arg == '-randomMap' or arg == '-rm':
-				map_file = randMap()
+				map_file = newMap(True)
 			elif arg == '-newMap' or arg == '-nm':
-				map_file = newMap()
-
+				map_file = newMap(False)
 
 	global MAPHEIGHT
 	global MAPWIDTH
@@ -221,12 +213,7 @@ def main():
 	fixMatrix(tilemap)
 
 	#turn off map printing w/ -noGraphics
-	noGraphics = False
-	if len(sys.argv) >= 2:
-		for i in range(len(sys.argv)):
-			if sys.argv[i] == "-noGraphics" or sys.argv[i] == "-ng":
-				noGraphics = True
-	if noGraphics == False:
+	if NO_GRAPHICS == False:
 		#initialize the display
 		pygame.init()
 		pygame.display.set_caption("Walter Wanderley")
@@ -243,7 +230,7 @@ def main():
 				fast = True
 	printTilemap()
 	while True:
-		if noGraphics == False:
+		if NO_GRAPHICS == False:
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					pygame.quit()
@@ -273,7 +260,7 @@ def main():
 
 	    	printTilemap()
 		
-		if noGraphics == False:
+		if NO_GRAPHICS == False:
 			#draw map to screen	
 			for column in range(MAPWIDTH):
 				for row in range(MAPHEIGHT):

@@ -48,42 +48,25 @@ def readMap(file):
 
 	
 #creates a new map either based off the user input or a random number when prompted by the user
-def newMap():
-    f = open("newMap.txt","w+")
+def newMap(random_map):
+	des = open("newMap.txt","w+")
 
-    w = int(raw_input("Please enter the number of columns (width): "))
-    l = int(raw_input("Please enter the number of rows (length): "))
+	if random_map:
+		rows = random.randint(4,21)
+		cols = random.randint(4,21)
+	else:	
+		cols = int(raw_input("Please enter the number of columns (width): "))
+		rows = int(raw_input("Please enter the number of rows (length): "))
 
-	#creates a map based off inputted length and width
-    for x in range(l):
-        for i in range(w):
-            if x == 0 or i == 0 or x == l - 1 or i == w - 1:
-                f.write('w')
-            else:
-                f.write('f')
-
-        f.write('\n')
-
-    f.close()
-    return "newMap.txt"
-
-
-def randMap():
-	f = open("newMap.txt","w+")
-
-	width = random.randint(4,21)
-	length = random.randint(4,21)
-
-	#creates a map based off inputted length and width
-	for x in range(length):
-		for i in range(width):
-			if x == 0 or i == 0 or x == length - 1 or i == width - 1:
-				f.write('w')
+ 	for row in range(rows):
+		for col in range(cols):
+			if row == 0 or row == (rows -1)or col == 0 or col == (cols -1):
+				des.write('W')
+				if col == (cols - 1):
+					des.write('\n')
 			else:
-				f.write('f')
+				des.write("F")
 
-			f.write('\n')
-        
-	f.close()
 
+	des.close()
 	return "newMap.txt"
