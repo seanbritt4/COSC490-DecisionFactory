@@ -1,5 +1,5 @@
 TODO:
-    -finish easyStack
+    -test in framework.py
     
 CHNGES:
       
