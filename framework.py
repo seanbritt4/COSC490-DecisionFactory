@@ -252,8 +252,6 @@ def main():
 
     printTilemap()
 
-
-
     while True:
         if NO_GRAPHICS == False:
             for event in pygame.event.get():

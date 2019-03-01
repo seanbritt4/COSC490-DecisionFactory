@@ -1,60 +1,56 @@
 '''
-	incomplete BUT can finish if wanted/needed
+	should work with rest of framework but have not tested it yet
 	
+	each stack class oobject created is actually two stacks
+		one tracks all moves made (never popped from)
+		other is to be used if Walter needs to return
+
+	handles return direction in superPop
+
+	coordinates are included but tbh i didnt really understand what their intended use was
+	
+
 	also have you guys seen the spice girls lately. i kinda hoped one of them were looking rough but they all held up pretty well. good for them.
 '''
-'''
-class Stack:
+class SuperStack():
 	def __init__(self):
-		# self.head_node = Node(0,0)
-		print 'stack init'
-		self.head_node = Node('none')
-		# print "in: ", self.head_node
+		self.moves = []					#list of moves made by player
+		self.discovered = []			#list of discovered tiles
+		self.current_location = [0,0]	#(x,y) Walters coordinates
+		self.size = 0					#number of elements in list
+
+	
+	def superPop(self):
+		move = self.moves.pop()
+
+		'''
+			return opposite direction, Walter can use this to go back home
+		'''
+		if move == 'up':
+			move = 'down'
+		elif move == 'down':
+			move = 'up'
+		elif move == 'left':
+			move = 'right'
+		elif move == 'right':
+			move = 'left'
+
+		# appropriately update Walters position in the world
+		self.toCoord(move)
+		return move
 
 
-	def push(self, direction):
-		print 'stack push'
-		new_node = Node(direction)
-		# print new_node
-		new_node.printNode()
-
-		node = self.head_node
-		while node.next_node:
-			node = node.next_node
-			# print "push while: ", node
-
-		node.next_node = new_node
-
-
-	def pop(self):
-		print 'stack pop'
-		pass
-
-
-	def printStack(self):
-		print 'stack print'
-		node = self.head_node
-		while node:
-			node.printNode()
-			# print node
-			# print node.next_node
-			node = node.next_node
-'''
-class easyStack():
-	def __init__(self):
-		self.moves = []
-		self.discovered = []
-		self.current_location = [0,0]
-		self.size = 0
-
-	def easyPop(self):
-		return self.moves.pop()
-
-	def easyPush(self, move):
+	'''
+		updates stack size, stack (adds latest move to end of stack), Walters coordinates,
+		and discovered tiles stack
+	'''
+	def superPush(self, move):
 		self.size += 1
-		self.moves.append(self.toCoord(move))
+		self.moves.append(move)
+		self.toCoord(move)
 		self.discovered.append(move)
 
+	#updates coordinates
 	def toCoord(self, move):
 		if move == 'up':
 			self.current_location[1] -= 1
@@ -67,19 +63,17 @@ class easyStack():
 
 		return self.current_location
 
+
+	'''
+		following functions can be used for debugging. Dont see any other reason to use them
+	'''
+
 	def getSize(self):
 		return self.size
-
-
-	'''
-		print functions used for debugging
-	'''
 	def printMoves(self):
 		print self.moves
-
 	def printDiscovered(self):
 		print self.discovered
-
 	def printAll(self):
 		print "Moves:"
 		print self.moves

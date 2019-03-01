@@ -1,6 +1,6 @@
 from Stack import *
 
-s = easyStack()
+s = SuperStack()
 
 print 'WASD for directions. Q to quit'
 
@@ -11,17 +11,17 @@ while key != 'q':
 	if key == 'q':
 		pass
 	elif key == 'w':
-		s.easyPush('up')
+		s.superPush('up')
 	elif key == 'a':
-		s.easyPush('left')
+		s.superPush('left')
 	elif key == 's':
-		s.easyPush('down')
+		s.superPush('down')
 	elif key == 'd':
-		s.easyPush('right')
+		s.superPush('right')
 
 	print s.current_location
 
-		# s.easyPush(key)
+		# s.superPush(key)
 
 print "printMoves"
 s.printMoves()
@@ -31,10 +31,11 @@ print "printAll"
 s.printAll()
 
 for i in range(0, s.getSize()):
-	print s.easyPop()
+	print s.superPop()
 
 
 s.printAll()
+print s.current_location
 '''
 using Stack class, can finish OR we can use lists as stacks
 	FIFO used in lists
