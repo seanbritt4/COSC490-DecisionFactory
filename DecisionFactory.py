@@ -1,4 +1,5 @@
 import random
+import Stack
 
 #import numpy as np
 
@@ -12,6 +13,9 @@ class DecisionFactory:
 
 		self.counter = 0
 		self.next_direction = 'wait'
+
+		self.pushed_moves = Stack()
+		self.popped_moves = Stack()
 	#Note: we have relativistic coordinates recorded here, since the map
 	# is relative to the player's first known and recorded position:
 	#self.state.pos = (0,0)

@@ -58,6 +58,8 @@ MAPHEIGHT = 10      #default- used if no map file is passed at execution
 
 #define position globally
 position = (0, 0)
+
+#globals for command line tags
 INIT_OVER = False
 FAST = False
 RAND_MAP = False
@@ -250,6 +252,8 @@ def main():
 
     printTilemap()
 
+
+
     while True:
         if NO_GRAPHICS == False:
             for event in pygame.event.get():
@@ -301,6 +305,9 @@ def main():
                     pygame.draw.rect(DISPLAYSURF, colors[tilemap[column][row]], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 
             pygame.display.update()
+
+        raw_input("Press Enter to Quit")
+        sys.exit()
 
 
 '''
