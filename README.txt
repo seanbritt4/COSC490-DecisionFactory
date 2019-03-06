@@ -1,7 +1,8 @@
 TODO:
-
+    -test in framework.py
+    
 CHNGES:
-      some optimization and restructuring, see upload comments for more info
+      
       
 
 OVERRIDE INITIALIZATION/NO GRAPHICS/NO SLEEP HOWTO:

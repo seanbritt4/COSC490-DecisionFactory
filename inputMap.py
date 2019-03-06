@@ -27,6 +27,8 @@ def readMap(file):
 					row.append(0)
 				elif line[i].upper() == "W":
 					row.append(1)
+				elif line[i].upper() == 'G':
+					row.append(2)
 				else:
 					row.append('x')
 
@@ -43,4 +45,5 @@ def readMap(file):
 
 	src.close()
 	map_info = [dimensions, tilemap]
+	print tilemap
 	return map_info

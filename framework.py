@@ -26,7 +26,7 @@ PURPLE = (189, 23, 173) #portal
 BLACK = (0, 0, 0)       #ground/none
 GREEN = (0, 255, 0)     #player
 GREY = (130, 130, 130)  #wall
-
+RED = (255, 0, 0)
 #declare tile types
 
 F = 0
@@ -38,7 +38,7 @@ N = 'x' #refers to a spot that cannot be spawned in,
     #note that if a player walks over this spot, it will become F
 
 #assign colors
-
+#
 colors = {
 
         P : GREEN,
@@ -58,6 +58,8 @@ MAPHEIGHT = 10      #default- used if no map file is passed at execution
 
 #define position globally
 position = (0, 0)
+
+#globals for command line tags
 INIT_OVER = False
 FAST = False
 RAND_MAP = False
@@ -75,14 +77,14 @@ def initPlayerAndPortal():
     global position
     for y in range(0, MAPHEIGHT):
         for x in range(0, MAPWIDTH):
-            if tilemap[x][y] == 3:
+            if tilemap[x][y] == 3 or tilemap[x][y] == 'p':
                 if INIT_OVER == False:
                     player_exists = True
                     position = [x, y]
                 else:
                     tilemap[x][y] = 0
 
-            if tilemap[x][y] == 2:
+            if tilemap[x][y] == 2 or tilemap[x][y] == 'g':
                 if INIT_OVER == False:
                     portal_exists = True
 
@@ -219,12 +221,13 @@ def main():
     global MAPHEIGHT
     global MAPWIDTH
     global tilemap
-
+    global TILESIZE
     map_info = readMap(map_file)
     MAPHEIGHT = map_info[0][1]
     MAPWIDTH = map_info[0][0]
     tilemap = map_info[1]
-
+    if MAPHEIGHT > 18:
+	TILESIZE = 20
     #swap tiles to match the input map
 
     fixMatrix(tilemap)
@@ -259,8 +262,9 @@ def main():
 
         
         if fast == False:       
-            time.sleep(0.08)
-
+            time.sleep(.06)
+#	else:
+	#	time.sleep(.01)
         print
 
 
@@ -293,6 +297,24 @@ def main():
             #df.put_decision(decision)
 
             printTilemap()
+	if df.popping == False:	
+		colors = {
+		        P : GREEN,
+	        	G : PURPLE,
+        		F : BLACK,
+        		W : GREY, 
+        		N : BLACK
+   		}
+	else:
+		colors = {
+		        P : RED,
+		        G : PURPLE,
+        		F : BLACK,
+        		W : GREY, 
+        		N : BLACK
+    		}
+
+
 
         if NO_GRAPHICS == False:
             #draw map to screen 

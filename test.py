@@ -1,10 +1,48 @@
-import re
+from Stack import *
 
-s = "map00.txt"
+s = SuperStack()
 
-x = re.search("map.*\.txt", s)
+print 'WASD for directions. Q to quit'
 
-if x:
-	print x.string
-else:
-	print 'Not Found'
+key = ''
+while key != 'q':
+	key = raw_input()
+	key= key.lower()
+	if key == 'q':
+		pass
+	elif key == 'w':
+		s.superPush('up')
+	elif key == 'a':
+		s.superPush('left')
+	elif key == 's':
+		s.superPush('down')
+	elif key == 'd':
+		s.superPush('right')
+
+	print s.current_location
+	print s.moves
+		# s.superPush(key)
+
+print "printMoves"
+s.printMoves()
+print "printDiscovered"
+s.printDiscovered()
+print "printAll"
+s.printAll()
+
+for i in range(0, s.getSize()):
+	print s.superPop()
+
+
+s.printAll()
+print s.current_location
+'''
+using Stack class, can finish OR we can use lists as stacks
+	FIFO used in lists
+'''
+# s = Stack()
+# s.printStack()
+# s.push('left')
+
+# print
+# s.printStack()
